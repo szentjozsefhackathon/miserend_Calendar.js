@@ -8,6 +8,9 @@
   "author": {
     "name": "Bunoon"
   },
+  "script": {
+    "start": "node dist/calendar.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/williamtroup/Calendar.js"
@@ -37,5 +40,8 @@
   "bugs": {
     "url": "https://github.com/williamtroup/Calendar.js/issues"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.7.2"
+  }
 }

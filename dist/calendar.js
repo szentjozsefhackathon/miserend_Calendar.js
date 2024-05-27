@@ -8998,11 +8998,14 @@ function calendarJs(elementOrId, options, searchOptions) {
     _options.goText = getDefaultString(_options.goText, "Go");
   }
   function setEventTypeTranslationStringOptions() {
-    setEventTypeOption(_options.eventTypeNormalText, "Normal", 0);
-    setEventTypeOption(_options.eventTypeMeetingText, "Meeting", 1);
-    setEventTypeOption(_options.eventTypeBirthdayText, "Birthday", 2);
-    setEventTypeOption(_options.eventTypeHolidayText, "Holiday", 3);
-    setEventTypeOption(_options.eventTypeTaskText, "Task", 4);
+        setEventTypeOption( _options.eventTypeNormalText , "Családos/Mocorgós", 0 );
+        setEventTypeOption( _options.eventTypeMeetingText , "Diák", 1 );
+        setEventTypeOption( _options.eventTypeBirthdayText , "Gitáros", 2 );
+        setEventTypeOption( _options.eventTypeHolidayText , "Csendes", 3 );
+        setEventTypeOption( _options.eventTypeTaskText , "Igeliturgia", 4 );
+        setEventTypeOption( _options.eventTypeVecsernye , "Vecsernye", 5 );
+        setEventTypeOption( _options.eventTypeSzentsegimadas , "Szentségimádás", 6 );
+        setEventTypeOption( _options.eventTypeGorogkatolikus , "Görögkatolikus", 7 );
   }
   function setEventTypeOption(optionEventText, defaultEventText, eventId) {
     if (_options_EventType.hasOwnProperty(eventId)) {

@@ -10,7 +10,6 @@
  * @copyright   Bunoon 2024
  */
 
-
 /**
  * calendarJs().
  * 
@@ -95,23 +94,35 @@ function calendarJs( elementOrId, options, searchOptions ) {
         _options_Search = {},
         _options_EventType = {
             0: {
-                text: "Normal Label",
+                text: "Családos/Mocorgós",
                 eventEditorInput: null
             },
             1: {
-                text: "Meeting Label",
+                text: "Diák",
                 eventEditorInput: null
             },
             2: {
-                text: "Birthday Label",
+                text: "Gitáros",
                 eventEditorInput: null
             },
             3: {
-                text: "Holiday Label",
+                text: "Csendes",
                 eventEditorInput: null
             },
             4: {
-                text: "Task Label",
+                text: "Igeliturgia",
+                eventEditorInput: null
+            },
+            5: {
+                text: "Vecsernye",
+                eventEditorInput: null
+            },
+            6: {
+                text: "Szentségimádás",
+                eventEditorInput: null
+            },
+            7: {
+                text: "Görögkatolikus",
                 eventEditorInput: null
             }
         },
@@ -632,7 +643,7 @@ function calendarJs( elementOrId, options, searchOptions ) {
             _this.addEvents( _options.events, false, false, false );
         }
 
-        loadEventsFromLocalStorage();
+        // loadEventsFromLocalStorage();
         loadEventsToAddOrUpdateFromFetchTrigger();
     }
 
@@ -6451,12 +6462,12 @@ function calendarJs( elementOrId, options, searchOptions ) {
             alertOffset: 0
         };
 
-        _this.addEvent( newEvent, false );
+        // _this.addEvent( newEvent, false );
 
         showNotificationPopUp( _options.eventAddedText.replace( "{0}", newEvent.title ) );
         buildFullMonthViewDayEvents();
         refreshOpenedViews();
-        storeEventsInLocalStorage();
+        // storeEventsInLocalStorage();
 
         return newEvent;
     }
@@ -8420,7 +8431,7 @@ function calendarJs( elementOrId, options, searchOptions ) {
             _element_View_Event_Dragged_EventDetails.from = addMinutesToDate( _element_View_Event_Dragged_EventDetails.from, differenceMinutes );
             _element_View_Event_Dragged_EventDetails.to = addMinutesToDate( _element_View_Event_Dragged_EventDetails.to, differenceMinutes );
             
-            storeEventsInLocalStorage();
+            // storeEventsInLocalStorage();
             fireCustomTrigger( "onEventUpdated", _element_View_Event_Dragged_EventDetails );
             showNotificationPopUp( _options.eventUpdatedText.replace( "{0}", _element_View_Event_Dragged_EventDetails.title ) );
             refreshOpenedViews();
@@ -8471,7 +8482,7 @@ function calendarJs( elementOrId, options, searchOptions ) {
                 }
 
                 if ( eventsResized ) {
-                    storeEventsInLocalStorage();
+                    // storeEventsInLocalStorage();
                     refreshOpenedViews();
                 }
             }
@@ -8697,7 +8708,7 @@ function calendarJs( elementOrId, options, searchOptions ) {
                 }
             } );
 
-            storeEventsInLocalStorage();
+            // storeEventsInLocalStorage();
             showNotificationPopUp( _options.eventsRemovedText.replace( "{0}", eventsRemoved ) );
             refreshViews();
         };
@@ -10638,7 +10649,7 @@ function calendarJs( elementOrId, options, searchOptions ) {
      * Local Storage (persistence)
      * ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
      */
-
+    
     function storeEventsInLocalStorage() {
         if ( _options.useLocalStorageForEvents && _parameter_Window.localStorage ) {
             clearLocalStorageObjects();
@@ -10950,7 +10961,7 @@ function calendarJs( elementOrId, options, searchOptions ) {
 
     function importFromFilesCompleted( eventsAddedOrUpdated ) {
         if ( eventsAddedOrUpdated.length > 0 ) {
-            storeEventsInLocalStorage();
+            // storeEventsInLocalStorage();
             updateSideMenu();
             buildFullMonthViewDayEvents();
             refreshOpenedViews();
@@ -12429,7 +12440,7 @@ function calendarJs( elementOrId, options, searchOptions ) {
                 this.addEvent( event, false, false, false );
             }
 
-            storeEventsInLocalStorage();
+            // storeEventsInLocalStorage();
     
             if ( triggerEvent ) {
                 fireCustomTrigger( "onEventsAdded", events );
@@ -12600,7 +12611,7 @@ function calendarJs( elementOrId, options, searchOptions ) {
                     }
             
                     if ( updateEvents ) {
-                        storeEventsInLocalStorage();
+                        // storeEventsInLocalStorage();
                         updateSideMenu();
                         buildFullMonthViewDayEvents();
                         refreshOpenedViews();
@@ -12608,7 +12619,7 @@ function calendarJs( elementOrId, options, searchOptions ) {
                 }
             }
         }
-
+        const newItem = createItem(event);
         return added;
     };
 
@@ -12643,7 +12654,7 @@ function calendarJs( elementOrId, options, searchOptions ) {
             }
     
             if ( updateEvents ) {
-                storeEventsInLocalStorage();
+                // storeEventsInLocalStorage();
                 updateSideMenu();
                 buildFullMonthViewDayEvents();
                 refreshOpenedViews();
@@ -12680,14 +12691,17 @@ function calendarJs( elementOrId, options, searchOptions ) {
     
                 updated = this.addEvent( event, updateEvents, false );
 
-                storeEventsInLocalStorage();
+                // storeEventsInLocalStorage();
     
                 if ( updated && triggerEvent ) {
                     fireCustomTrigger( "onEventUpdated", event );
                 }
-            }
+            }    
         }
-
+        // PUT: /api/miserend?id=existing_id 
+        // body: the event object in json format
+        // require('api.calls');
+        // updateItem(id, event);
         return updated;
     };
 
@@ -12727,7 +12741,7 @@ function calendarJs( elementOrId, options, searchOptions ) {
                     }
     
                     if ( updateEvents ) {
-                        storeEventsInLocalStorage();
+                        // storeEventsInLocalStorage();
                         updateSideMenu();
                         buildFullMonthViewDayEvents();
                         refreshOpenedViews();
@@ -12765,6 +12779,7 @@ function calendarJs( elementOrId, options, searchOptions ) {
             getAllEventsFunc( function( event, storageDate, storageGuid ) {
                 if ( storageGuid === id ) {
                     delete _events[ storageDate ][ storageGuid ];
+                    removeItem(event.id)
                     removed = true;
     
                     if ( triggerEvent ) {
@@ -12772,7 +12787,7 @@ function calendarJs( elementOrId, options, searchOptions ) {
                     }
     
                     if ( updateEvents ) {
-                        storeEventsInLocalStorage();
+                        // storeEventsInLocalStorage();
                         updateSideMenu();
                         buildFullMonthViewDayEvents();
                         refreshOpenedViews();
@@ -12811,7 +12826,7 @@ function calendarJs( elementOrId, options, searchOptions ) {
             }
     
             if ( updateEvents ) {
-                storeEventsInLocalStorage();
+                // storeEventsInLocalStorage();
                 updateSideMenu();
                 buildFullMonthViewDayEvents();
                 refreshOpenedViews();
@@ -12892,7 +12907,7 @@ function calendarJs( elementOrId, options, searchOptions ) {
             } );
     
             if ( updateEvents ) {
-                storeEventsInLocalStorage();
+                // storeEventsInLocalStorage();
                 updateSideMenu();
                 buildFullMonthViewDayEvents();
                 refreshOpenedViews();
@@ -13882,11 +13897,14 @@ function calendarJs( elementOrId, options, searchOptions ) {
     }
 
     function setEventTypeTranslationStringOptions() {
-        setEventTypeOption( _options.eventTypeNormalText , "Normal", 0 );
-        setEventTypeOption( _options.eventTypeMeetingText , "Meeting", 1 );
-        setEventTypeOption( _options.eventTypeBirthdayText , "Birthday", 2 );
-        setEventTypeOption( _options.eventTypeHolidayText , "Holiday", 3 );
-        setEventTypeOption( _options.eventTypeTaskText , "Task", 4 );
+        setEventTypeOption( _options.eventTypeNormalText , "Családos/Mocorgós", 0 );
+        setEventTypeOption( _options.eventTypeMeetingText , "Diák", 1 );
+        setEventTypeOption( _options.eventTypeBirthdayText , "Gitáros", 2 );
+        setEventTypeOption( _options.eventTypeHolidayText , "Csendes", 3 );
+        setEventTypeOption( _options.eventTypeTaskText , "Igeliturgia", 4 );
+        setEventTypeOption( _options.eventTypeVecsernye , "Vecsernye", 5 );
+        setEventTypeOption( _options.eventTypeSzentsegimadas , "Szentségimádás", 6 );
+        setEventTypeOption( _options.eventTypeGorogkatolikus , "Görögkatolikus", 7 );
     }
 
     function setEventTypeOption( optionEventText, defaultEventText, eventId ) {
@@ -14009,4 +14027,74 @@ function calendarJs( elementOrId, options, searchOptions ) {
         }
 
     } ) ( document, window, navigator, Math, JSON );
+}
+
+async function removeItem(id) {
+    console.log('> removeItem');
+    // console.log(event);
+    
+    try {
+        const response = await axios.delete(`http://localhost/api/miserend/${id}`, id);
+        console.log(response);
+        console.log('< removeItem: SUCCESS');
+    }
+    catch (error) {
+        console.log(error);
+        console.log('< removeItem: FAIL');
+    }
+}
+
+async function updateItem(id, event) {
+    console.log('> updateItem');
+    
+    try {
+        const response = await axios.put(`http://localhost/api/miserend/${id}`, event);
+        console.log(response);
+        
+        if(response.config.data){
+            const responseText = document.createTextNode(response.config.data);
+            const monthViewCalendar = document.getElementsByClassName("full-month-view");
+            monthViewCalendar[0].appendChild(responseText);
+        }
+
+        console.log('< updateItem: SUCCESS');
+    }
+    catch (error) {
+        console.log(error);
+        console.log('< updateItem: FAIL');
+    }
+}
+
+async function createItem(event) {
+    console.log('> createItem');
+    // console.log(event);
+
+    try {
+        const response = await axios.post(`http://localhost/api/miserend`, event);
+        console.log(response);
+        event.id = response.data.insertedId;
+
+        // document.getElementById("resp-container-id").remove();
+
+        if(response.config.data){
+            const monthViewCalendar = document.getElementsByClassName("full-month-view");
+            const respObj = JSON.parse(response.config.data);
+
+            const respDiv = document.createElement('div');
+            respDiv.setAttribute('id', 'resp-container-id');
+
+            for(let key in respObj){
+                const respLine = document.createElement('p');
+                respLine.append(`${key}: ${respObj[key]}`);
+                respDiv.appendChild(respLine);
+            }
+            monthViewCalendar[0].append(respDiv);
+        }
+
+        console.log('< createItem: SUCCESS');
+    }
+    catch (error) {
+        console.log(error);
+        console.log('< createItem: FAIL');
+    }
 }
